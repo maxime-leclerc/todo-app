@@ -53,7 +53,7 @@ export default {
     fetchTasks () {
       axios.get(`${API_URL}:${API_PORT}/api/tasks`)
         .then((response) => this.tasks = response.data)
-        .catch((error) => alert(error.response.data));
+        .catch((error) => console.log(error.response));
     },
     storeTask () {
       axios.post(`${API_URL}:${API_PORT}/api/tasks/store`, this.task)
@@ -61,7 +61,7 @@ export default {
           this.tasks.push(response.data);
           this.init();
         })
-        .catch((error) => alert(error.response.data));
+        .catch((error) => console.log(error.response));
     },
     updateTask (index, task) {
       let id = task._id;
@@ -71,12 +71,12 @@ export default {
       };
       axios.put(`${API_URL}:${API_PORT}/api/tasks/${id}`, params)
         .then((response) => this.tasks.splice(index, 1, response.data))
-        .catch((error) => alert(error.response.data));
+        .catch((error) => console.log(error.response));
     },
     deleteTask (index, id) {
       axios.delete(`${API_URL}:${API_PORT}/api/tasks/${id}`)
         .then((response) => this.tasks.splice(index, 1))
-        .catch((error) => alert(error.response.data));
+        .catch((error) => console.log(error.response));
     }
   }
 };

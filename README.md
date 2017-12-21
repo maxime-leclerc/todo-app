@@ -1,18 +1,17 @@
 ## TODO APP
 
-### CLIENT
+#### CLIENT
 - VueJS
 - Axios (http client)
 - Webpack (Vue-loader + Babel-loader)
 - ES6 (with babel-loader)
 
-### SERVER
-- ExpressJs
-- Mongoose
+#### SERVER
+- API REST with ExpressJs
+- MongoDB (with mongoose)
 - ES6 (with babel-register to compile on the fly ES6)
 
-
-## INSTALLATION
+#### INSTALLATION
 Install dependencies (in client && server folder)
 ```bash
 yarn or npm install
