@@ -13,7 +13,6 @@
 
 
 ## INSTALLATION
-
 Install dependencies (in client && server folder)
 ```bash
 yarn or npm install
