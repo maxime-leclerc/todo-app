@@ -27,6 +27,10 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src')]
+      },
+      {
+        test: /\.styl$/,
+        loader: 'css-loader!stylus-loader?paths=node_modules/bootstrap-stylus/stylus/'
       }
     ]
   }
