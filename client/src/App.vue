@@ -11,13 +11,15 @@
           <td>Réalisée</td>
           <td>Nom</td>
           <td>Date de création</td>
+          <td>Mis à jour</td>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(task, index) in tasks">
           <td><input type="checkbox" :checked="task.done" @change="updateTask(index, task)"></td>
           <td><input type="text" v-model="task.name"></td>
-          <td>{{ task.created_at }}</td>
+          <td>{{ task.created_at | datetime }}</td>
+          <td>{{ task.updated_at | datetime }}</td>
           <td>
             <button @click="updateTask(index, task)">Mettre à jour</button>
             <button @click="deleteTask(index, task._id)">Supprimer</button>
@@ -53,7 +55,7 @@ export default {
     fetchTasks () {
       axios.get(`${API_URL}:${API_PORT}/api/tasks`)
         .then((response) => this.tasks = response.data)
-        .catch((error) => alert(error.response.data));
+        .catch((error) => console.log(error.response));
     },
     storeTask () {
       axios.post(`${API_URL}:${API_PORT}/api/tasks/store`, this.task)
@@ -61,7 +63,7 @@ export default {
           this.tasks.push(response.data);
           this.init();
         })
-        .catch((error) => alert(error.response.data));
+        .catch((error) => console.log(error.response));
     },
     updateTask (index, task) {
       let id = task._id;
@@ -71,12 +73,12 @@ export default {
       };
       axios.put(`${API_URL}:${API_PORT}/api/tasks/${id}`, params)
         .then((response) => this.tasks.splice(index, 1, response.data))
-        .catch((error) => alert(error.response.data));
+        .catch((error) => console.log(error.response));
     },
     deleteTask (index, id) {
       axios.delete(`${API_URL}:${API_PORT}/api/tasks/${id}`)
         .then((response) => this.tasks.splice(index, 1))
-        .catch((error) => alert(error.response.data));
+        .catch((error) => console.log(error.response));
     }
   }
 };

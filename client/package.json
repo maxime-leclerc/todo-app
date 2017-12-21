@@ -8,6 +8,7 @@
   "author": "Maxime Leclerc",
   "dependencies": {
     "axios": "^0.17.1",
+    "moment": "^2.20.1",
     "vuejs": "^2.0.19"
   },
   "devDependencies": {
