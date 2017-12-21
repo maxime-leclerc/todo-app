@@ -1,0 +1,21 @@
+{
+  "name": "todo-app-server",
+  "version": "1.0.0",
+  "description": "Todo app server side with Expressjs / Mongodb using ES6",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Maxime Leclerc",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.7",
+    "q": "^1.5.1"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.14.1"
+  }
+}
