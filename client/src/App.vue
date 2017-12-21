@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <form @submit.prevent="storeTask">
-      <input type="checkbox" v-model="task.done"/>
-      <input type="text" placeholder="Nom" v-model="task.name"/>
+      <input type="checkbox" v-model="newTask.done"/>
+      <input type="text" placeholder="Nom" v-model="newTask.name"/>
       <input type="submit" value="enregistrer">
     </form>
     <table>
@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr v-for="(task, index) in tasks">
-          <td><input type="checkbox" :checked="task.done" @change="updateTask(index, task)"></td>
+          <td><input type="checkbox" :checked="task.done"></td>
           <td><input type="text" v-model="task.name"></td>
           <td>{{ task.created_at | datetime }}</td>
           <td>{{ task.updated_at | datetime }}</td>
@@ -37,7 +37,7 @@ import { API_URL, API_PORT } from '../config';
 export default {
   data: () => ({
     tasks: [],
-    task: {
+    newTask: {
       name: '',
       done: false
     }
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     init () {
-      this.task = {
+      this.newTask = {
         name: '',
         done: false
       }
@@ -58,7 +58,7 @@ export default {
         .catch((error) => console.log(error.response));
     },
     storeTask () {
-      axios.post(`${API_URL}:${API_PORT}/api/tasks/store`, this.task)
+      axios.post(`${API_URL}:${API_PORT}/api/tasks/store`, this.newTask)
         .then((response) => {
           this.tasks.push(response.data);
           this.init();
@@ -72,7 +72,7 @@ export default {
         name: task.name
       };
       axios.put(`${API_URL}:${API_PORT}/api/tasks/${id}`, params)
-        .then((response) => this.tasks.splice(index, 1, response.data))
+        .then((response) => this.tasks[index].updated_at = response.data.updated_at)
         .catch((error) => console.log(error.response));
     },
     deleteTask (index, id) {
