@@ -1,84 +1,38 @@
 <template>
   <div id="app">
-   <v-app>
-    <v-toolbar class="indigo" dark>
-      <v-toolbar-title>Ma todo list</v-toolbar-title>
-    </v-toolbar>
-    <main>
-      <v-container fluid>
-        <v-layout row>
-          <v-flex md6 offset-md3>
-            <v-layout grid>
-              <v-text-field label="Ajouter une tâche ..." v-model="newTask.name"></v-text-field>
-              <v-btn @click="storeTask" small primary fab dark>
-                <v-icon>add</v-icon>
-              </v-btn>
-            </v-layout>
-            <v-list v-if="tasks.length > 0">
-              <v-spacer></v-spacer>
-              <v-text-field
-                append-icon="search"
-                label="Rechercher ..."
-                single-line
-                hide-details
-                v-model="search"
-              ></v-text-field>
-              <v-subheader>Liste des tâches</v-subheader>
-               <v-data-table
-                  v-model="selected"
-                  v-bind:headers="headers"
-                  v-bind:tasks="tasks"
-                  select-all
-                  item-key="name"
-                  class="elevation-1"
-                >
-                <template slot="headers" slot-scope="props">
-                  <tr>
-                    <th>
-                      <v-checkbox
-                        primary
-                        hide-details
-                        @click.native="toggleAll"
-                        :input-value="props.all"
-                        :indeterminate="props.indeterminate"
-                      ></v-checkbox>
-                    </th>
-                    <th v-for="header in props.headers" :key="header.text"
-                      :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                      @click="changeSort(header.value)"
-                    >
-                      <v-icon>arrow_upward</v-icon>
-                      {{ header.text }}
-                    </th>
-                  </tr>
-                </template>
-                <template slot="tasks" slot-scope="props">
-                  <tr :active="props.selected" @click="props.selected = !props.selected">
-                    <td>
-                      <v-checkbox
-                        primary
-                        hide-details
-                        :input-value="props.selected"
-                      ></v-checkbox>
-                    </td>
-                    <td>{{ props.task.created_at }}</td>
-                    <td class="text-xs-right">{{ propos.task.name }}</td>
-                  </tr>
-                </template>
-              </v-data-table>
+    <v-app>
+      <navbar></navbar>
+      <main>
+        <v-container fluid>
+          <v-layout row>
+            <v-flex md6 offset-md3>
+              <create-task></create-task>
+              <list-tasks></list-tasks>
             </v-flex>
           </v-layout>
         </v-container>
       </main>
+      <footer></footer>
     </v-app>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import ListTasks from './app/tasks/list-tasks';
+import CreateTask from './app/tasks/create-task';
 import { API_URL, API_PORT } from '../config';
 
 export default {
+  name: 'App',
+  components: {
+    Navbar,
+    Footer,
+    ListTasks,
+    CreateTask
+  },
   data: () => ({
     search: '',
     pagination: {

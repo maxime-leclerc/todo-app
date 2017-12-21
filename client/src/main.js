@@ -4,6 +4,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import moment from 'moment';
 import App from './App.vue';
+import store from './store';
 
 Vue.use(Vuetify);
 
@@ -13,5 +14,6 @@ Vue.filter('datetime', function (date) {
 })
 
 new Vue({
+  store,
   render: h => h(App)
 }).$mount('#app');
