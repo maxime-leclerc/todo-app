@@ -15,36 +15,62 @@
               </v-btn>
             </v-layout>
             <v-list v-if="tasks.length > 0">
-              <v-subheader>Tâches restantes</v-subheader>
-              <v-list-tile v-for="(task, i) in tasks" :key="i">
-                <v-list-tile-action>
-                  <v-checkbox v-model="task.done" @change="updateTask(task, i)"></v-checkbox>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>{{task.name}} (Créée le {{ task.created_at | datetime }})</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-            <v-card-text v-else>
-              <span class="grey--text">Aucune tâche restante</span>
-            </v-card-text>
-          </v-flex>
+              <v-spacer></v-spacer>
+              <v-text-field
+                append-icon="search"
+                label="Rechercher ..."
+                single-line
+                hide-details
+                v-model="search"
+              ></v-text-field>
+              <v-subheader>Liste des tâches</v-subheader>
+               <v-data-table
+                  v-model="selected"
+                  v-bind:headers="headers"
+                  v-bind:tasks="tasks"
+                  select-all
+                  item-key="name"
+                  class="elevation-1"
+                >
+                <template slot="headers" slot-scope="props">
+                  <tr>
+                    <th>
+                      <v-checkbox
+                        primary
+                        hide-details
+                        @click.native="toggleAll"
+                        :input-value="props.all"
+                        :indeterminate="props.indeterminate"
+                      ></v-checkbox>
+                    </th>
+                    <th v-for="header in props.headers" :key="header.text"
+                      :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                      @click="changeSort(header.value)"
+                    >
+                      <v-icon>arrow_upward</v-icon>
+                      {{ header.text }}
+                    </th>
+                  </tr>
+                </template>
+                <template slot="tasks" slot-scope="props">
+                  <tr :active="props.selected" @click="props.selected = !props.selected">
+                    <td>
+                      <v-checkbox
+                        primary
+                        hide-details
+                        :input-value="props.selected"
+                      ></v-checkbox>
+                    </td>
+                    <td>{{ props.task.created_at }}</td>
+                    <td class="text-xs-right">{{ propos.task.name }}</td>
+                  </tr>
+                </template>
+              </v-data-table>
+            </v-flex>
           </v-layout>
         </v-container>
       </main>
     </v-app>
-    <form @submit.prevent="storeTask">
-      <input type="checkbox" v-model="newTask.done"/>
-      <input type="text" placeholder="Nom" v-model="newTask.name"/>
-      <input type="submit" value="enregistrer">
-    </form>
-    <ul>
-      <li v-for="(task, index) in tasks" v-bind:class="[task.done ? 'done' : '']" @click="updateTask(index, task)">
-        {{ task.name }}
-        {{ task.created_at | datetime }}
-        <span class="close" @click="deleteTask(index, task._id)"></span>
-      </li>
-    </ul>
   </div>
 </template>
 
@@ -54,11 +80,20 @@ import { API_URL, API_PORT } from '../config';
 
 export default {
   data: () => ({
+    search: '',
+    pagination: {
+      sortBy: 'name'
+    },
+    selected: [],
     tasks: [],
     newTask: {
       name: '',
       done: false
-    }
+    },
+    headers: [
+      { text: 'Date de création', value: 'created_at'},
+      { text: 'Titre', value: 'name' }
+    ]
   }),
   mounted () {
     this.fetchTasks();
@@ -89,13 +124,25 @@ export default {
         done: !task.done
       };
       axios.put(`${API_URL}:${API_PORT}/api/tasks/${id}`, params)
-        .then((response) => this.tasks[index].updated_at = response.data.updated_at)
+        .then((response) => console.log(response.data))
         .catch((error) => console.log(error.response));
     },
     deleteTask (index, id) {
       axios.delete(`${API_URL}:${API_PORT}/api/tasks/${id}`)
         .then((response) => this.tasks.splice(index, 1))
         .catch((error) => console.log(error.response));
+    },
+    toggleAll () {
+      if (this.selected.length) this.selected = []
+      else this.selected = this.tasks.slice();
+    },
+    changeSort (column) {
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending;
+      } else {
+        this.pagination.sortBy = column;
+        this.pagination.descending = false;
+      }
     }
   }
 };
