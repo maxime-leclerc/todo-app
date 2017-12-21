@@ -17,11 +17,15 @@ Install dependencies (in client && server folder)
 ```bash
 yarn or npm install
 ```
+Complete config files in :
+- client/config.js
+- server/config.js
+
 Build app.js with webpack (in client folder)
  ```bash
 yarn build or npm run build
 ```
-Launch server (in server folder)
+Start application (in server folder)
  ```bash
 yarn start or npm run start
 ```
