@@ -6,7 +6,7 @@ import App from './App.vue';
 
 // Filter to correctly format date
 Vue.filter('datetime', function (date) {
-  return moment(date).format('DD/MM/YYYY hh:mm:ss');
+  return moment(date).format('DD/MM/YYYY HH:mm:ss', 'fr');
 })
 
 new Vue({
