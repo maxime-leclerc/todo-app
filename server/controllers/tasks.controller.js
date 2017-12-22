@@ -11,13 +11,13 @@ const listTasks = (req, res) => {
 
 const storeTask = (req, res) => {
   taskService.store(req.body)
-    .then(msg => res.status(200).send(msg))
+    .then(task => res.status(200).json(task))
     .catch(err => res.status(400).send(err));
 };
 
 const updateTask = (req, res) => {
   taskService.update(req.params._id, req.body)
-    .then(msg => res.status(200).send(msg))
+    .then(task => res.status(200).json(task))
     .catch(err => res.status(400).send(err));
 };
 

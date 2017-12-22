@@ -9,7 +9,7 @@ const list = () => {
 
   Tasks.find({}, (err, tasks) => {
     if (err) deferred.reject(`${err.name} : ${err.message}`);
-    if (tasks) deferred.resolve(tasks);
+    else deferred.resolve(tasks);
   });
   return deferred.promise;
 };
@@ -20,7 +20,7 @@ const store = (params) => {
 
   const newTask = new Tasks({
     name: params.name,
-    done: params.done,
+    done: false,
     created_at: new Date(),
     updated_at: new Date()
   });
@@ -38,9 +38,9 @@ const update = (_id, params) => {
 
   params.updated_at = new Date();
 
-  Tasks.findByIdAndUpdate(_id, params, (err) => {
+  Tasks.findByIdAndUpdate(_id, params, (err, task) => {
     if (err) deferred.reject(`${err.name} : ${err.message}`);
-    else deferred.resolve('La tâche a été mise à jour.');
+    else deferred.resolve(task);
   });
 
   return deferred.promise;
