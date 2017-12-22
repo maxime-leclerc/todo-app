@@ -1,6 +1,6 @@
 {
   "name": "todo-app-server",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Todo app server side with Expressjs / Mongodb using ES6",
   "scripts": {
     "start": "nodemon app.js"
