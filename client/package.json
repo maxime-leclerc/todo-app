@@ -1,6 +1,6 @@
 {
   "name": "todo-app-client",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Todo app client side using Vuejs ",
   "scripts": {
     "dev": "webpack --watch --config build/webpack.config.js",
@@ -11,6 +11,7 @@
     "axios": "^0.17.1",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
+    "vue-axios": "^2.0.2",
     "vuejs": "^2.0.19",
     "vuetify": "^0.17.5",
     "vuex": "^3.0.1"

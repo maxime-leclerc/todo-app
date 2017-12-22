@@ -20,20 +20,20 @@
             <v-list-tile-sub-title>Créée le {{ task.created_at | datetime }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-action>
-            <v-icon @click.stop="deleteModal = true">delete_forever</v-icon>
+            <v-icon @click.stop="deleteModal(index, task._id)">delete_forever</v-icon>
           </v-list-tile-action>
-          <v-dialog v-model="deleteModal" max-width="500px">
-            <v-card>
-              <v-card-title>
-                <h2 class="modal-title">Souhaitez-vous vraiment supprimer cette tâche ?</h2>
-              </v-card-title>
-              <v-card-actions>
-                <v-btn color="primary" @click="deleteTask(index, task._id)">Oui</v-btn>
-                <v-btn color="error" @click="deleteModal=false">Non</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
         </v-list-tile>
+        <v-dialog v-model="showDeleteModal" max-width="500px" lazy>
+          <v-card>
+            <v-card-title>
+              <h2 class="modal-title">Souhaitez-vous vraiment supprimer cette tâche ?</h2>
+            </v-card-title>
+            <v-card-actions>
+              <v-btn color="primary" @click="deleteTask(indexDelete, idDelete)">Oui</v-btn>
+              <v-btn color="error" @click="showDeleteModal=false">Non</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-list>
     </v-list>
   </v-card>
@@ -51,7 +51,9 @@
     },
     data: () => ({
       search: '',
-      deleteModal: false
+      showDeleteModal: false,
+      indexDelete: '',
+      idDelete: ''
     }),
     computed: {
       ...mapGetters({
@@ -78,8 +80,15 @@
         this.$store.dispatch('updateTask', task);
       },
       deleteTask (index, id) {
-        this.deleteModal = false;
+        this.showDeleteModal = false;
         this.$store.dispatch('deleteTask', [index, id]);
+        this.indexDelete = index;
+        this.idDelete = id;
+      },
+      deleteModal (index, id) {
+        this.indexDelete = index;
+        this.idDelete = id;
+        this.showDeleteModal = true;
       }
     }
   };

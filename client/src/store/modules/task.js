@@ -53,7 +53,7 @@ const actions = {
         context.commit(TOGGLE_LOADING, false);
       })
       .catch((error) => {
-        context.commit(NOTIFY_TASK, [`Erreur: ${error}`, 'error']);
+        context.commit(NOTIFY_TASK, [error.response.data, 'error']);
         context.commit(TOGGLE_LOADING, false);
       });
   },
@@ -66,7 +66,7 @@ const actions = {
         context.commit(RESET_TASK);
       })
       .catch((error) => {
-        context.commit(NOTIFY_TASK, [`Erreur: ${error}`, 'error']);
+        context.commit(NOTIFY_TASK, [error.response.data, 'error']);
       });
   },
   updateTask (context, task) {
@@ -77,7 +77,7 @@ const actions = {
         context.commit(NOTIFY_TASK, [message, 'success']);
       })
       .catch((error) => {
-        context.commit(NOTIFY_TASK, [`Erreur: ${error}`, 'error']);
+        context.commit(NOTIFY_TASK, [error.response, 'error']);
       });
   },
   deleteTask (context, [index, id]) {
@@ -88,7 +88,7 @@ const actions = {
         context.commit(DELETE_TASK, index);
       })
       .catch((error) => {
-        context.commit(NOTIFY_TASK, [`Erreur: ${error}`, 'error']);
+        context.commit(NOTIFY_TASK, [error.response.data, 'error']);
       });
   }
 };
