@@ -20,7 +20,7 @@ const store = (params) => {
 
   const newTask = new Tasks({
     name: params.name,
-    done: params.done,
+    done: false,
     created_at: new Date(),
     updated_at: new Date()
   });

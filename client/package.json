@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "Todo app client side using Vuejs ",
   "scripts": {
+    "dev": "webpack --watch --config build/webpack.config.js",
     "build": "webpack --config build/webpack.config.js"
   },
   "author": "Maxime Leclerc",
   "dependencies": {
     "axios": "^0.17.1",
+    "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "vuejs": "^2.0.19",
     "vuetify": "^0.17.5",

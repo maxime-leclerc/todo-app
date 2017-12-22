@@ -9,6 +9,9 @@ export const TasksService = {
   storeTask (task) {
     return axios.post(`${API_URL}:${API_PORT}/api/tasks/store`, task);
   },
+  updateTask (id, task) {
+    return axios.put(`${API_URL}:${API_PORT}/api/tasks/${id}`, task);
+  },
   deleteTask (id) {
     return axios.delete(`${API_URL}:${API_PORT}/api/tasks/${id}`);
   }

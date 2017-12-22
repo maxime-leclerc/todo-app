@@ -11,35 +11,25 @@
           </v-layout>
         </v-container>
       </main>
+      <notification></notification>
       <footer></footer>
     </v-app>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Notification from './components/Notification';
 import ListTasks from './app/tasks/list-tasks';
-import { API_URL, API_PORT } from '../config';
 
 export default {
   name: 'App',
   components: {
     Navbar,
     Footer,
+    Notification,
     ListTasks
-  },
-  methods: {
-    updateTask (index, task) {
-      let id = task._id;
-      let params = {
-        done: !task.done
-      };
-      axios.put(`${API_URL}:${API_PORT}/api/tasks/${id}`, params)
-        .then((response) => console.log(response.data))
-        .catch((error) => console.log(error.response));
-    }
   }
 };
 </script>

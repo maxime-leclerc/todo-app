@@ -1,6 +1,6 @@
 <template>
   <v-layout grid class="form-task">
-    <v-text-field label="Ajouter une tâche ..." v-model="task.name"></v-text-field>
+    <v-text-field label="Ajouter une tâche ..." v-model="task.name" @keyup.enter="storeTask"></v-text-field>
     <v-btn @click="storeTask" small primary fab dark>
       <v-icon>add</v-icon>
     </v-btn>
