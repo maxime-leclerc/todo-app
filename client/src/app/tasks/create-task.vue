@@ -1,5 +1,5 @@
 <template>
-  <v-layout grid>
+  <v-layout grid class="form-task">
     <v-text-field label="Ajouter une tâche ..." v-model="task.name"></v-text-field>
     <v-btn @click="storeTask" small primary fab dark>
       <v-icon>add</v-icon>
@@ -24,3 +24,8 @@
     }
   }
 </script>
+
+<style lang="stylus">
+  .form-task
+    padding: 10px 0
+</style>

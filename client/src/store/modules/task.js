@@ -1,5 +1,11 @@
 import { TasksService } from '@/services/tasks';
-import { SET_TASKS, STORE_TASK, SET_ERRORS, TOGGLE_LOADING } from '@/store/types';
+import {
+  SET_TASKS,
+  STORE_TASK,
+  DELETE_TASK,
+  SET_ERRORS,
+  TOGGLE_LOADING
+} from '@/store/types';
 
 const state = {
   errors: null,
@@ -26,11 +32,15 @@ const actions = {
       })
   },
   storeTask (context, task) {
-    context.commit(TOGGLE_LOADING, true);
     return TasksService.storeTask(task)
       .then(({ data }) => {
         context.commit(STORE_TASK, data);
-        context.commit(TOGGLE_LOADING, false);
+      })
+  },
+  deleteTask (context, [index, id]) {
+    return TasksService.deleteTask(id)
+      .then(({ data }) => {
+        context.commit(DELETE_TASK, index);
       })
   }
 };
@@ -40,7 +50,10 @@ const mutations = {
     state.tasks = data;
   },
   [STORE_TASK] (state, data) {
-    state.task = data;
+    state.tasks.push(data);
+  },
+  [DELETE_TASK] (state, index) {
+    state.tasks.splice(index, 1);
   },
   [TOGGLE_LOADING] (state, isLoading) {
     state.isLoading = isLoading;

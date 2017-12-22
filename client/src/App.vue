@@ -5,9 +5,8 @@
       <main>
         <v-container fluid>
           <v-layout row>
-            <v-flex md6 offset-md3>
+            <v-flex md8 offset-md2>
               <list-tasks></list-tasks>
-              <create-task></create-task>
             </v-flex>
           </v-layout>
         </v-container>
@@ -22,7 +21,6 @@ import axios from 'axios';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ListTasks from './app/tasks/list-tasks';
-import CreateTask from './app/tasks/create-task';
 import { API_URL, API_PORT } from '../config';
 
 export default {
@@ -30,8 +28,7 @@ export default {
   components: {
     Navbar,
     Footer,
-    ListTasks,
-    CreateTask
+    ListTasks
   },
   methods: {
     updateTask (index, task) {
@@ -41,11 +38,6 @@ export default {
       };
       axios.put(`${API_URL}:${API_PORT}/api/tasks/${id}`, params)
         .then((response) => console.log(response.data))
-        .catch((error) => console.log(error.response));
-    },
-    deleteTask (index, id) {
-      axios.delete(`${API_URL}:${API_PORT}/api/tasks/${id}`)
-        .then((response) => this.tasks.splice(index, 1))
         .catch((error) => console.log(error.response));
     }
   }
