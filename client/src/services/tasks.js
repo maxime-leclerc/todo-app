@@ -1,18 +1,16 @@
 import Vue from 'vue';
-import axios from 'axios';
-import { API_URL, API_PORT } from '../../config';
 
 export const TasksService = {
   getTasks () {
-    return axios.get(`${API_URL}:${API_PORT}/api/tasks`);
+    return Vue.axios.get(`/api/tasks`);
   },
   storeTask (task) {
-    return axios.post(`${API_URL}:${API_PORT}/api/tasks/store`, task);
+    return Vue.axios.post(`/api/tasks/store`, task);
   },
   updateTask (id, task) {
-    return axios.put(`${API_URL}:${API_PORT}/api/tasks/${id}`, task);
+    return Vue.axios.put(`/api/tasks/${id}`, task);
   },
   deleteTask (id) {
-    return axios.delete(`${API_URL}:${API_PORT}/api/tasks/${id}`);
+    return Vue.axios.delete(`/api/tasks/${id}`);
   }
 }
