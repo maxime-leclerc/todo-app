@@ -13,26 +13,28 @@
           v-model="search"
          ></v-text-field>
       </v-subheader>
-      <v-list-tile v-for="(task, index) in tasks" :key="index" class="li-todo" @click="updateTask(task)">
-        <v-list-tile-content v-bind:class="[ task.done ? 'crossed': '']" @click="task.done = !task.done">
-          <v-list-tile-title>{{ task.name }}</v-list-tile-title>
-          <v-list-tile-sub-title>Créée le {{ task.created_at | datetime }}</v-list-tile-sub-title>
-        </v-list-tile-content>
-        <v-list-tile-action>
-          <v-icon @click.stop="deleteModal = true">delete_forever</v-icon>
-        </v-list-tile-action>
-        <v-dialog v-model="deleteModal" max-width="500px">
-          <v-card>
-            <v-card-title>
-              <h2 class="modal-title">Souhaitez-vous vraiment supprimer cette tâche ?</h2>
-            </v-card-title>
-            <v-card-actions>
-              <v-btn color="primary" @click="deleteTask(index, task._id)">Oui</v-btn>
-              <v-btn color="error" @click="deleteModal=false">Non</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-list-tile>
+      <v-list class="list-tasks">
+        <v-list-tile v-for="(task, index) in tasks" :key="index" class="li-todo" @click="updateTask(task)">
+          <v-list-tile-content v-bind:class="[ task.done ? 'crossed': '']" @click="task.done = !task.done">
+            <v-list-tile-title>{{ task.name }}</v-list-tile-title>
+            <v-list-tile-sub-title>Créée le {{ task.created_at | datetime }}</v-list-tile-sub-title>
+          </v-list-tile-content>
+          <v-list-tile-action>
+            <v-icon @click.stop="deleteModal = true">delete_forever</v-icon>
+          </v-list-tile-action>
+          <v-dialog v-model="deleteModal" max-width="500px">
+            <v-card>
+              <v-card-title>
+                <h2 class="modal-title">Souhaitez-vous vraiment supprimer cette tâche ?</h2>
+              </v-card-title>
+              <v-card-actions>
+                <v-btn color="primary" @click="deleteTask(index, task._id)">Oui</v-btn>
+                <v-btn color="error" @click="deleteModal=false">Non</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-list-tile>
+      </v-list>
     </v-list>
   </v-card>
 </template>
@@ -84,6 +86,9 @@
 </script>
 
 <style lang="stylus" scoped>
+  .list-tasks
+    height: 600px
+    overflow-y: auto
   .m-l-10
     margin-left: 10px
   .p-20
