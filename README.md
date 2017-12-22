@@ -1,7 +1,7 @@
 ## TODO APP
 
 #### CLIENT
-- VueJS
+- VueJS (+ Vuex)
 - Axios (http client)
 - Webpack (Vue-loader + Babel-loader)
 - ES6 (with babel-loader)
